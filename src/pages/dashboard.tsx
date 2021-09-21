@@ -8,7 +8,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 })
 
 const options = {
-    chart: {
+        chart: {
         toolbar: {
             show: false
         },
@@ -27,7 +27,7 @@ const options = {
         enabled: false,
     },
     xaxis: {
-        type: "datetime",
+        type: 'datetime',
         axisBorder: {
             color: theme.colors.gray[600]
         },
@@ -45,7 +45,7 @@ const options = {
         ]
     },
     fill: {
-        opacity:0.3,
+        opacity: 0.3,
         type: "gradient",
         gradient: {
             shade: "dark",
