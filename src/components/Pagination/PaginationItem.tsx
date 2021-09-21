@@ -6,10 +6,11 @@ interface PaginationItem {
 }
 
 
-
-
-export function PaginationItem({ isCurrent = false, number }: PaginationItem) {
-    if(isCurrent) {
+export function PaginationItem({
+    isCurrent = false,
+    number
+}: PaginationItem) {
+    if (isCurrent) {
         return (
             <Button
                 size="sm"
