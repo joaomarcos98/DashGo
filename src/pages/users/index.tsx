@@ -6,15 +6,15 @@ import { useQuery } from "react-query";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { api } from "../../services/api";
 
 
 export default function UserList() {
 
-    const { data, isLoading, error } = useQuery("users", async () => {
-        const response = await fetch("http://localhost:3000/api/users")
-        const data = await response.json();
+    const { data, isLoading, isFetching, error } = useQuery("users", async () => {
+        const { data } = await api.get("users")
 
-        const  users = data.users.map(user => {
+        const users = data.users.map(user => {
             return {
                 id: user.id,
                 name: user.name,
@@ -28,9 +28,10 @@ export default function UserList() {
         })
 
         return users;
+    }, {
+        staleTime: 1000 * 30
     })
 
-    console.log();
 
 
     const isWideVersion = useBreakpointValue({
@@ -46,7 +47,10 @@ export default function UserList() {
                 <Sidebar />
                 <Box flex="1" borderRadius={8} bg="gray.800" p={["6", "8"]}>
                     <Flex mb="8" justify="space-between" align="center">
-                        <Heading size="lg" fontWeight="normal">Usuários</Heading>
+                        <Heading size="lg" fontWeight="normal">
+                            Usuários
+                            {!isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" />}
+                        </Heading>
 
                         <Link href="/users/create" passHref>
                             <Button
@@ -75,7 +79,7 @@ export default function UserList() {
                                         <Th px={["4", "4", "6"]} color="gray.300" width="8">
                                             <Checkbox colorScheme="pink" />
                                         </Th>
-                                        <Th>Usuários</Th>
+                                        <Th> Usuários </Th>
                                         {isWideVersion && <Th>Data de cadastro</Th>}
                                         <Th width="8"></Th>
                                     </Tr>
